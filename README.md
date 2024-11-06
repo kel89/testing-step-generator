@@ -25,3 +25,24 @@ This will save the API key in the `.tsg` directory in your root.
 Run using `tsg generate` from the branch of your project you want to get testing steps for.
 By default this will comapre it against the `master` branch. However, you can specify a branch
 with `-b` or `--branch`, e.g., `tsg generate --branch other_branch`
+
+# Building and deploying (for me)
+
+So that I don't forget how I did all of this.
+
+To test the cli locally, use `pip install -e .` which will build it for you.
+Then you can get rid of it with `pip uninstall testing-step-generator`
+
+To build it, use `python -m build`
+
+To upload it to TestPyPi for testing:
+
+```
+twine upload --repository testpypi dist/*
+```
+
+Then to upload it to the real deal:
+
+```
+twine upload dist/*
+```
