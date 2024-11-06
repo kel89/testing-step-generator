@@ -1,4 +1,5 @@
 import os
+import argparse
 from . import generate_script
 
 
@@ -25,3 +26,27 @@ def generate():
         secret_key = f.read().strip()
 
     generate_script.main(secret_key)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog='tsg', description='Kenny\'s Test Helper CLI Tool')
+    subparsers = parser.add_subparsers(dest='command', required=True)
+
+    # Init command
+    parser_init = subparsers.add_parser(
+        'init', help='Initialize with your secret key')
+
+    # Generate command
+    parser_generate = subparsers.add_parser('generate', help='Generate output')
+
+    args = parser.parse_args()
+
+    if args.command == 'init':
+        init()
+    elif args.command == 'generate':
+        generate()
+
+
+if __name__ == '__main__':
+    main()
