@@ -13,7 +13,7 @@ def init():
     print("Config file created at: ", config_file)
 
 
-def generate():
+def generate(branch):
     config_file = os.path.expanduser("~/.tsg/config")
 
     # Check if the config file exists
@@ -25,7 +25,7 @@ def generate():
     with open(config_file, "r") as f:
         secret_key = f.read().strip()
 
-    generate_script.main(secret_key)
+    generate_script.main(secret_key, branch)
 
 
 def main():
@@ -38,14 +38,21 @@ def main():
         'init', help='Initialize with your secret key')
 
     # Generate command
+    # Generate command
     parser_generate = subparsers.add_parser('generate', help='Generate output')
+    parser_generate.add_argument(
+        '-b', '--branch',
+        type=str,
+        default='master',  # Default branch is 'master'
+        help='Target branch to compare with (default: master)'
+    )
 
     args = parser.parse_args()
 
     if args.command == 'init':
         init()
     elif args.command == 'generate':
-        generate()
+        generate(args.branch)
 
 
 if __name__ == '__main__':

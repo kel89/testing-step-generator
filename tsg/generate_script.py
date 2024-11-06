@@ -32,12 +32,12 @@ def test(a):
     return a*5
 
 
-def main(api_key):
+def main(api_key, branch='master'):
 
     # Get the diff from the current branch to master
     try:
         diff_output = subprocess.check_output(
-            ['git', 'diff', 'master'], stderr=subprocess.STDOUT)
+            ['git', 'diff', branch], stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         print("An error occurred while running git diff:")
         print(e.output.decode())
@@ -47,7 +47,7 @@ def main(api_key):
 
     # If the diff is empty, inform the user
     if not changes.strip():
-        print("No changes detected between the current branch and master.")
+        print(f"No changes detected between the current branch and {branch}")
         return
 
     # Get suggestions based on the changes
