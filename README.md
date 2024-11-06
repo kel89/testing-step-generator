@@ -7,6 +7,9 @@ This is a CLI that should generate testing steps.
 Simply run `pip install testing-step-generator`. This was designed using `Python 3.11`,
 so you should probably have that installed.
 
+If you don't have python installed, I highly recommend using `pyenv`, and for this
+you would want to set your global python to 3.11
+
 ## Commands
 
 ### init
