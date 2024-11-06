@@ -1,39 +1,38 @@
 import subprocess
 import openai
+from openai import OpenAI
 
 
-def get_suggestions(changes):
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a helpful developer assistant. "
-                        "Your answers should be very brief. "
-                        "You are helping with QA work. You will be given a git diff "
-                        "and you should look at all the changes made and recommend "
-                        "manual testing steps that the reviewer can use to test the "
-                        "changes made and be confident that all new changes are working."
-                    )
-                },
-                {
-                    "role": "user",
-                    "content": changes
-                }
-            ]
-        )
-        return response['choices'][0]['message']['content']
-    except openai.error.OpenAIError as e:
-        print("An error occurred while communicating with OpenAI API:")
-        print(str(e))
-        return None
+def get_suggestions(changes, api_key):
+    client = OpenAI(api_key=api_key)
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are a helpful developer assistant. "
+                    "Your answers should be very brief."
+                    "You are helping with QA work, you will be given a git diff"
+                    "and you should look at all the changes made and recommend"
+                    "mannual testing steps that the reviewer can use to test the"
+                    "changes made and be confident that all new changes are working"
+                )
+            },
+            {
+                "role": "user",
+                "content": changes
+            }
+        ]
+    )
+    return completion.choices[0].message.content
+
+
+def test(a):
+    return a*5
 
 
 def main(api_key):
-    # Set the OpenAI API key
-    openai.api_key = api_key
 
     # Get the diff from the current branch to master
     try:
@@ -52,7 +51,7 @@ def main(api_key):
         return
 
     # Get suggestions based on the changes
-    suggestions = get_suggestions(changes)
+    suggestions = get_suggestions(changes, api_key)
 
     # If suggestions were returned, print them
     if suggestions:
