@@ -1,4 +1,4 @@
-# Kenny's Testing Step Generate
+# Kenny's Testing Step Generator
 
 This is a CLI that should generate testing steps.
 
