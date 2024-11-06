@@ -1,6 +1,6 @@
 # Kenny's Testing Step Generator
 
-This is a CLI that should generate testing steps.
+This is a CLI that should generate testing steps. [PyPi Package](https://pypi.org/project/testing-step-generator/)
 
 ## Installation
 
